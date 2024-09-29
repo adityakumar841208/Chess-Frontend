@@ -19,6 +19,7 @@ const Game = () => {
     const apiUrl = import.meta.env.VITE_BACKEND_URL; //getting the url of backend
     const [winningStatus, setWinningStatus] = useState({ status: false, info: '' });
     const [playAgain, setPlayAgain] = useState(false);
+    const [opponentDisconnect, setOpponentDisconnect] = useState(false);
 
     //Timer resetting 
     const [resetTimer, setResetTimer] = useState(false);
@@ -51,7 +52,8 @@ const Game = () => {
             } else if (data.type === 'error') {
                 // alert(data.message);
             } else if (data.type === 'opponent disconnected!') {
-                alert("opponent disconnected");
+                setOpponentDisconnect(true);
+                // alert("you opponent disconnected")
             } else if (data.type === "gameOver") {
                 setWinningStatus({ status: true, info: data.status })
             } else if (data.type === 'playAgain') {
@@ -137,6 +139,22 @@ const Game = () => {
 
     return (
         <div className="h-screen overflow-x-hidden bg-gray-900 ">
+
+            {/* if opponent will disconnected */}
+            {
+                opponentDisconnect &&
+                <div className='bg-white p-8 lg:p-20 absolute top-1/2 left-1/2 rounded-lg shadow-lg text-center text-2xl font-bold text-gray-800 transform -translate-x-1/2 -translate-y-1/2 z-20'>
+                    <div className="mt-6 flex flex-col space-y-4 lg:space-y-0 lg:space-x-4 lg:flex-row justify-center">
+                        <h2 className='bg-green-500 rounded-lg text-white p-3'>Your Opponent Disconnected!</h2>
+                        <button
+                            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300"
+                            onClick={() => window.location.reload()}
+                        >
+                            New Game
+                        </button>
+                    </div>
+                </div>
+            }
 
             {/* block for gameOver or gameDraw  */}
 
