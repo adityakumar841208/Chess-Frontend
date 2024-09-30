@@ -15,7 +15,7 @@ const Game = () => {
     const [opponentTimerRunning, setOpponentTimerRunning] = useState(false);
     const clientRef = useRef(null);
     const chessref = useRef(new Chess());
-    const apiUrl = import.meta.env.VITE_BACKEND_URL; //getting the url of backend
+    const apiUrl = 'https://chess-backend-08oy.onrender.com'; //getting the url of backend
     const [winningStatus, setWinningStatus] = useState({ status: false, info: '' });
     const [playAgain, setPlayAgain] = useState(false);
     const [opponentDisconnect, setOpponentDisconnect] = useState(false);
