@@ -3,7 +3,6 @@ import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import Time from './Timer';
 
-//fix the timer not working when it is rematch
 const Game = () => {
     const [start, setStart] = useState(false);
     const [gameStatus, setGameStatus] = useState('Waiting for opponent');
