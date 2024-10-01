@@ -30,40 +30,45 @@ const Game = () => {
         clientRef.current = ws;
 
         ws.onmessage = (message) => {
-            const data = JSON.parse(message.data);
-            console.log(data);
-            if (data.type === 'start') {
-                setGameStatus('');
-                setTurn(data.turn);
-                setIdentity(data.yourIdentity);
-                setOrientation(data.orientation);
-                setFen(data.fen);
-                chessref.current.load(data.fen);
-            } else if (data.type === 'pendingUser') {
-                setGameStatus('Waiting for opponent');
-            } else if (data.type === 'move') {
-                // setResetTimer(false);
-                setFen(data.move.after);
-                chessref.current.load(data.move.after);
-            } else if (data.type === 'turn') {
-                setTurn(data.turn);
-                setHistory(data.history);
-            } else if (data.type === 'error') {
-                // alert(data.message);
-            } else if (data.type === 'opponent disconnected!') {
-                setOpponentDisconnect(true);
-                // alert("you opponent disconnected")
-            } else if (data.type === "gameOver") {
-                setWinningStatus({ status: true, info: data.status })
-            } else if (data.type === 'playAgain') {
-                setPlayAgain(true);
-            } else if (data.type === 'resetState') {
-                setResetTimer(true);
-                resetState(); //function to reset the board and other stuff
-                setFen(data.fen);
-                setTurn(data.turn);
-                chessref.current.reset();
-                setPlayAgain(false);
+            try {
+                const data = JSON.parse(message.data);
+                // console.log(data);
+                if (data.type === 'start') {
+                    setGameStatus('');
+                    setTurn(data.turn);
+                    setIdentity(data.yourIdentity);
+                    setOrientation(data.orientation);
+                    setFen(data.fen);
+                    chessref.current.load(data.fen);
+                } else if (data.type === 'pendingUser') {
+                    setGameStatus('Waiting for opponent');
+                } else if (data.type === 'move') {
+                    // setResetTimer(false);
+                    setFen(data.move.after);
+                    chessref.current.load(data.move.after);
+                } else if (data.type === 'turn') {
+                    setTurn(data.turn);
+                    setHistory(data.history);
+                } else if (data.type === 'error') {
+                    // alert(data.message);
+                } else if (data.type === 'opponent disconnected!') {
+                    setOpponentDisconnect(true);
+                    // alert("you opponent disconnected")
+                } else if (data.type === "gameOver") {
+                    setWinningStatus({ status: true, info: data.status })
+                } else if (data.type === 'playAgain') {
+                    setPlayAgain(true);
+                } else if (data.type === 'resetState') {
+                    setResetTimer(true);
+                    resetState(); //function to reset the board and other stuff
+                    setFen(data.fen);
+                    setTurn(data.turn);
+                    chessref.current.reset();
+                    setPlayAgain(false);
+                }
+
+            } catch (error) {
+                console.log('non-json message',error)
             }
         };
 
