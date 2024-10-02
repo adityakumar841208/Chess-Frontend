@@ -32,7 +32,7 @@ const Game = () => {
         ws.onmessage = (message) => {
             try {
                 // console.log(message);
-                // const data = JSON.parse(message.data);
+                const data = JSON.parse(message.data);
                 // console.log(data);
                 if (data.type === 'start') {
                     setGameStatus('');
